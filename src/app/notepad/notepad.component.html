@@ -1,0 +1,12 @@
+<form>
+    {{note.content}}
+    <div class="form-group">
+        <label for="title">{{note.title}}</label>
+        <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="note.content"
+            name="content"
+            placeholder="Your notes goes here.">
+    </div>
+</form>

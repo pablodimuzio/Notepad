@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 
 import { NoteCardsComponent } from '../note-cards/note-cards.component';
 import { Notes } from '../interfaces/notes';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { NotesService } from '../services/notes.service';
 
@@ -14,6 +15,7 @@ import { NotesService } from '../services/notes.service';
     CommonModule,
     NoteCardsComponent,
     RouterLink,
+    MatGridListModule,
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'

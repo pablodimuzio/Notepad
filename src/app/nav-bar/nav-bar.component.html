@@ -1,4 +1,11 @@
-<nav>
-    <li><a  routerLink='/notepad'>Create a new note</a></li>
-    <li><a routerLink="/home">Home</a></li>
-</nav>
+<nav class="navigation">
+    <button color="warn" aria-label="Create a new note" mat-fab extended routerLink="/" class="navigation-button">
+        <mat-icon>home</mat-icon>
+        All notes
+      </button>
+    <button color="warn" aria-label="Create a new note" mat-fab extended routerLink="/notepad" class="navigation-button">
+      <mat-icon>add</mat-icon>
+      New note
+    </button>
+  </nav>
+  

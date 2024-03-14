@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 
 import { SocialAuthService, GoogleSigninButtonModule, GoogleLoginProvider, SocialUser } from '@abacritt/angularx-social-login';
 
-import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
+import { NotesService } from '../services/notes.service';
 
 @Component({
   selector: 'app-auth',
@@ -23,42 +23,18 @@ export class AuthComponent implements OnInit{
 
   constructor(
     private Router: Router,
-    private authService: SocialAuthService,
-    private httpClient: HttpClient,
+    private socialAuthService: SocialAuthService,
+    private authService: AuthService,
+    private noteService: NotesService,
     ) {  }
 
-  async getAccessToken(user: SocialUser): Promise<string> {
-    
-    await this.authService.getAccessToken(GoogleLoginProvider.PROVIDER_ID).then(accessToken => {
-      this.accessToken = accessToken;
-    });
-
-    return this.accessToken;
-  }
-
-  async sendAccessTokenToServer(accessToken: string): Promise<string> {
-    const url = 'http://localhost:3300/login';
-    const body = {accessToken: accessToken};
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-    };
-
-    await this.httpClient.post(url, body, options).subscribe((response) => {
-      return response;
-    });
-
-    return 'Error: Could not send access token to server.'
-  }
-
   ngOnInit(): void {
-    this.authService.authState.subscribe((user) => {
+    this.socialAuthService.authState.subscribe((user) => {
       if (user) {
-        console.log('User is logged in.');
-        this.getAccessToken(user)
+        console.log('User is logging-in.');
+        this.authService.getAccessToken(user)
         .then((accessToken) => {
-          console.log(this.sendAccessTokenToServer(accessToken));
+          this.noteService.getPageNotes(accessToken, 0, 3).then((notes) => {console.log(notes)});
         })
         .then(() => {
           this.Router.navigate(['/']);
